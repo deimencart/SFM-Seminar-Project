@@ -1,0 +1,29 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.2.9 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.2.9">
+  <diagram name="Página-1" id="AyTQXEfw5oLoRoIF88e6">
+    <mxGraphModel dx="496" dy="298" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="92iICTVMV7c_lMROy50R-1" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="New Images" vertex="1">
+          <mxGeometry height="70" width="110" x="90" y="30" as="geometry">
+            <mxRectangle height="30" width="110" x="90" y="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="92iICTVMV7c_lMROy50R-2" parent="92iICTVMV7c_lMROy50R-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;ul&gt;&lt;li&gt;Matches&amp;nbsp;&lt;/li&gt;&lt;li&gt;Keypoints&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;" vertex="1">
+          <mxGeometry height="60" width="110" x="-20" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="92iICTVMV7c_lMROy50R-3" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 7px;&quot;&gt;Ransac for Inliers and Fundamental M&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="140" x="80" y="150" as="geometry">
+            <mxRectangle height="30" width="110" x="90" y="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="92iICTVMV7c_lMROy50R-4" parent="92iICTVMV7c_lMROy50R-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;ul&gt;&lt;li&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;" vertex="1">
+          <mxGeometry height="60" width="110" x="-20" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="92iICTVMV7c_lMROy50R-6" edge="1" parent="1" source="92iICTVMV7c_lMROy50R-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.318;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="92iICTVMV7c_lMROy50R-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,6 @@
+The calibartion matrix is
+[[594.82592298   0.         233.98653265]
+ [  0.         593.74292037 164.30560069]
+ [  0.           0.           1.        ]]
+The radial distortion parameters are
+[[-0.33141401  0.57033979  0.          0.         -0.37772095]]

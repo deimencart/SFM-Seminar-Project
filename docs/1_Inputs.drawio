@@ -1,0 +1,109 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
+  <diagram name="Página-1" id="TKkdQNXno5gRx_8L9z66">
+    <mxGraphModel dx="1426" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-1" value="Inputs" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="50" width="290" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-3" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;New - New C1 - C2 PAIRS&amp;nbsp; -&amp;gt; MATCHES_4_AB&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;Old - new pair C1 - Imagen Vieja&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;K = new = k_camera (Calibracion nueva)&amp;nbsp;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="ucRP3nWSGz9Y5eQfuzjt-1">
+          <mxGeometry x="10" y="30" width="260" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-4" value="Load Superglue Matches" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="220" width="360" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-5" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;x1, x2 = extract_matches&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;x1_old_new, x2_old_new = extract_matches(matches_4_old_a) (OLD ↔ C1)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="ucRP3nWSGz9Y5eQfuzjt-4">
+          <mxGeometry x="10" y="30" width="350" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="ucRP3nWSGz9Y5eQfuzjt-4" source="ucRP3nWSGz9Y5eQfuzjt-5" target="ucRP3nWSGz9Y5eQfuzjt-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-7" value="2) RANSAC Fundamental matrices (pixel domain)&amp;nbsp;" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="350" width="430" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-8" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;- RANSAC Fundamental Matrix&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Inlier filtering&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Essential Matrix: E = Kᵀ F K&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="ucRP3nWSGz9Y5eQfuzjt-7">
+          <mxGeometry x="2" y="27" width="420" height="143" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="ucRP3nWSGz9Y5eQfuzjt-7" source="ucRP3nWSGz9Y5eQfuzjt-8" target="ucRP3nWSGz9Y5eQfuzjt-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-12" value="Relative Pose Estimation" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="540" width="430" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-13" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp;Decompose E → (R,t) candidates&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Cheirality check&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Select best (R_21, t_21)&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="ucRP3nWSGz9Y5eQfuzjt-12">
+          <mxGeometry x="2" y="27" width="420" height="143" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="ucRP3nWSGz9Y5eQfuzjt-12" source="ucRP3nWSGz9Y5eQfuzjt-13" target="ucRP3nWSGz9Y5eQfuzjt-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-17" value="3D Reconstruction" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="30" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-18" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;- Projection matrices:&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;P1 = K [I | 0]&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;P2 = K [R | t]&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Linear triangulation&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Output: 3D points X3D (world = new1)&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="ucRP3nWSGz9Y5eQfuzjt-17">
+          <mxGeometry x="10" y="30" width="350" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="ucRP3nWSGz9Y5eQfuzjt-17" source="ucRP3nWSGz9Y5eQfuzjt-18" target="ucRP3nWSGz9Y5eQfuzjt-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-20" value="Old–New Correspondences" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="290" width="430" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-21" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Reproject X3D into new1&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Nearest-neighbor matching (pixel RMSE)&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Build (X3D ↔ x_old) correspondences&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="ucRP3nWSGz9Y5eQfuzjt-20">
+          <mxGeometry x="2" y="27" width="420" height="163" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="ucRP3nWSGz9Y5eQfuzjt-20" source="ucRP3nWSGz9Y5eQfuzjt-21" target="ucRP3nWSGz9Y5eQfuzjt-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="ucRP3nWSGz9Y5eQfuzjt-20" source="ucRP3nWSGz9Y5eQfuzjt-21" target="ucRP3nWSGz9Y5eQfuzjt-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-23" value="Camera Decomposition" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="520" width="430" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-24" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; - Decompose P_old → K_old, R_old, t_old&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;nbsp; &amp;nbsp;- Reprojection RMSE evaluation&lt;/span&gt;&lt;/font&gt;&lt;/h1&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="ucRP3nWSGz9Y5eQfuzjt-23">
+          <mxGeometry x="2" y="27" width="420" height="143" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="ucRP3nWSGz9Y5eQfuzjt-23" source="ucRP3nWSGz9Y5eQfuzjt-24" target="ucRP3nWSGz9Y5eQfuzjt-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1375" y="30" as="sourcePoint" />
+            <mxPoint x="1375" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-27" value="Visualization" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="40" width="430" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-28" value="3D points + camera frames (new1, new2, old)" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="ucRP3nWSGz9Y5eQfuzjt-27">
+          <mxGeometry x="2" y="27" width="420" height="193" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="ucRP3nWSGz9Y5eQfuzjt-27" source="ucRP3nWSGz9Y5eQfuzjt-28" target="ucRP3nWSGz9Y5eQfuzjt-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.392;entryY=0.045;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ucRP3nWSGz9Y5eQfuzjt-3" target="ucRP3nWSGz9Y5eQfuzjt-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ucRP3nWSGz9Y5eQfuzjt-5" target="ucRP3nWSGz9Y5eQfuzjt-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ucRP3nWSGz9Y5eQfuzjt-8" target="ucRP3nWSGz9Y5eQfuzjt-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.409;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ucRP3nWSGz9Y5eQfuzjt-12" target="ucRP3nWSGz9Y5eQfuzjt-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ucRP3nWSGz9Y5eQfuzjt-18" target="ucRP3nWSGz9Y5eQfuzjt-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ucRP3nWSGz9Y5eQfuzjt-21" target="ucRP3nWSGz9Y5eQfuzjt-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ucRP3nWSGz9Y5eQfuzjt-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.002;entryY=0.109;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ucRP3nWSGz9Y5eQfuzjt-24" target="ucRP3nWSGz9Y5eQfuzjt-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
