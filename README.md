@@ -1,172 +1,161 @@
-# 3D Structure from Motion (SfM): Real Seminario de Zaragoza
+# Reconstrucción 3D SfM: Real Seminario de Zaragoza
 
-> **Sparse & Dense 3D Reconstruction from Historical (circa 1950) and Modern Photographs**  
-> *Academic Framework: Computer Vision & Multi-View Geometry*  
-> *Core Algorithms: Intrinsic Calibration, SuperGlue GNN Matching, Hartley-Normalized Epipolar SVD, DLT Triangulation, RANSAC Homography, and VGGT Neural Geometry*
+> **Reconstrucción 3D Tridimensional a partir de Fotografía Histórica (c. 1950) y Moderna**  
+> *Marco Académico: Visión por Computador y Geometría Multivista*  
+> *Métodos: Calibración Intrínseca, Emparejamiento SuperGlue, Geometría Epipolar SVD, Triangulación DLT, Homografía RANSAC y VGGT*
 
 ---
 
 > [!IMPORTANT]
-> **Academic Reproduction & Educational Purpose Notice**  
-> This repository contains an academic coursework implementation and experimental project developed strictly for educational, research, and benchmarking purposes in computer vision. All algorithmic foundations (SuperGlue, LightGlue, Hartley-Zisserman MVG, and VGGT) are fully attributed to their original authors. There is no intent of commercial exploitation or plagiarism.
+> **Aviso de Proyecto Académico (Sin fines de plagio)**  
+> Este repositorio contiene el desarrollo y los resultados de un proyecto académico experimental en visión por computador. Las formulaciones teóricas y algoritmos base (SuperGlue, LightGlue, Hartley-Zisserman y VGGT) pertenecen y son atribuidos a sus respectivos autores. Este trabajo se publica con fines puramente educativos y de demostración técnica.
 
 ---
 
-## Quick Navigation Index
+## 📌 ¿Qué problema resuelve este proyecto?
 
-| Section | Description | Direct Link |
-| :--- | :--- | :--- |
-| **System Overview** | Problem statement, historic vs. modern imagery challenges | [System Overview](#system-overview) |
-| **Mathematical Formulation** | Epipolar algebra, Hartley normalization, DLT triangulation, SVD | [Mathematical Formulation](#mathematical-formulation) |
-| **Experimental Results** | Reprojection error, RMSE metrics, inlier distribution, 3D point cloud | [Experimental Results](#experimental-results) |
-| **Repository Structure** | Organized layout of source scripts, data, and docs | [Repository Structure](#repository-structure) |
-| **Execution Guide** | Step-by-step instructions to run calibration, matching, and SfM | [Execution Guide](#execution-guide) |
-| **Documentation & Slides** | Link to full presentation (28 slides) and specification | [Documentation](#documentation) |
+El objetivo es reconstruir la geometría tridimensional de la fachada del **Real Seminario de Minería de Zaragoza** combinando dos fuentes visuales con una brecha temporal y tecnológica extrema:
+1. Una **fotografía histórica de archivo en blanco y negro** (tomada aproximadamente en 1950, sin metadatos de cámara, con grano analógico y resolución distinta).
+2. **Fotografías digitales modernas** tomadas desde diferentes ángulos en el campus actual con una cámara calibrada.
+
+### Desafíos Superados
+* **Brecha temporal de más de 70 años:** Cambios drásticos en la vegetación (árboles crecidos), presencia de vehículos modernos y desgaste de la piedra.
+* **Cámara no calibrada en la foto histórica:** Se requiere estimar la relación geométrica entre una cámara analógica desconocida y la cámara moderna para recuperar las poses relativas $[R \mid \mathbf{t}]$ en el espacio.
 
 ---
 
-## System Overview
+## 🛠️ ¿Qué implementamos en este repositorio?
 
-This project reconstructs the 3D geometry of the historical **Real Seminario de Minería de Zaragoza** by bridging extreme visual domain gaps between archive black-and-white photography (circa 1950) and modern calibrated digital captures.
+El pipeline de Structure from Motion (SfM) implementado orquesta desde la calibración hasta la triangulación 3D:
 
 ```
-+---------------------------+       +---------------------------+
-|  Historical Image (1950)  |       |   Modern Image (Calib)    |
-| (Aspect ratio, no intrins)|       |  (Radial undistortion K)  |
-+-------------+-------------+       +-------------+-------------+
-              |                                   |
-              +-----------------+-----------------+
+[ Foto Histórica (1950) ]              [ Fotos Modernas (Digital) ]
+            |                                       |
+            |                                       v
+            |                         [ Calibración Intrínseca K ]
+            |                         (Tablero ajedrez + desdistorsión)
+            |                                       |
+            +-------------------+-------------------+
                                 |
                                 v
-               [ SuperGlue GNN Feature Matching ]
+               [ Emparejamiento SuperGlue (GNN) ]
+              (Extracción de puntos de interés)
                                 |
                                 v
-             [ Inlier / Outlier Rejection & RANSAC ]
-                     (71 Inliers / 33 Outliers)
+             [ Filtrado de Outliers con RANSAC ]
+                (71 inliers / 33 descartados)
                                 |
                                 v
-            [ Hartley-Normalized 8-Point Essential SVD ]
+             [ Estimación Epipolar Normalizada ]
+            (Hartley + Matriz Esencial por SVD)
                                 |
                                 v
-              [ DLT 3D Triangulation & Reprojection ]
-                    (RMSE: 2.110 px on Camera 1)
+               [ Triangulación 3D (DLT) ]
+             (Cálculo de puntos 3D + RMSE 2.11 px)
                                 |
                                 v
-              [ VGGT Dense Neural Geometry Output ]
+             [ Reconstrucción Densa Neural VGGT ]
 ```
 
-### Visual Highlights
+### 1. Calibración y Preparación de Imágenes
+* **`src/camera_calibration.py`:** Calibra la cámara moderna mediante un patrón de tablero de ajedrez ($9 \times 6$), calculando la matriz intrínseca $K$ y los coeficientes de distorsión radial ($k_1, k_2$) para desdistorsionar las imágenes.
+* **`src/cutting_camera.py`:** Normaliza las dimensiones de las fotos históricas y modernas a un tamaño común ($682 \times 384\,\text{px}$) forzando el centrado del punto principal óptico.
 
-| 3D Point Cloud & Camera Poses | Dense Neural Reconstruction (VGGT) |
+### 2. Emparejamiento y Filtrado de Puntos
+* **`src/matches_in_between_points.py`:** Procesa las correspondencias de SuperGlue, descartando falsos positivos provocados por el movimiento de hojas de árboles, sombras y reflejos en automóviles.
+* **`src/homographyRANSAC.py`:** Calcula la homografía plana con RANSAC para verificar la coplanaridad de las ventanas y molduras de la fachada.
+
+### 3. Pipeline Epipolar y Triangulación 3D
+* **`src/global_assignment.py` & `src/sfm_epipolar_pipeline.py`:**
+  * Aplica la normalización isotrópica de Hartley a los puntos 2D para estabilizar el cálculo numérico.
+  * Resuelve la matriz fundamental $F$ y la matriz esencial $E$ mediante descomposición en valores singulares (SVD).
+  * Descompone $E$ en la rotación $R$ y traslación $\mathbf{t}$ relativas entre las dos cámaras.
+  * Triangula los puntos correspondientes mediante DLT (Direct Linear Transform) para obtener las coordenadas 3D en el espacio.
+
+### 4. Reconstrucción Neuronal 3D (VGGT)
+* Se integró el modelo de transformer geométrico **VGGT** (*Visual Geometry Grounded Transformer*) para generar una reconstrucción densa y continua de la fachada a partir de las vistas emparejadas.
+
+---
+
+## 📊 Resultados y Métricas Cuantitativas
+
+* **Puntos emparejados iniciales:** 104 correspondencias.
+* **Inliers geométricos confirmados:** **71 puntos (68.3%)**.
+* **Outliers descartados:** **33 puntos (31.7%)** (eliminación de falsos positivos en vegetación y vehículos).
+* **Error de reproyección (Camera 1):**
+  * **RMSE:** **2.110 píxeles**.
+  * **Error Medio:** **1.969 píxeles**.
+
+| Reconstrucción 3D y Poses de Cámara | Reconstrucción Densa Neural (VGGT) |
 | :---: | :---: |
 | ![3D Reconstruction](docs/images/reconstruction_3d_cameras_pointcloud.png) | ![VGGT](docs/images/seminario_vggt_reconstruction.png) |
 
-| SuperGlue Feature Correspondences | Reprojection Error Verification |
+| Correspondencias Filtradas SuperGlue | Verificación de Error de Reproyección |
 | :---: | :---: |
 | ![SuperGlue](docs/images/superglue_matches_global.png) | ![Reprojection Error](docs/images/reprojection_error_visualization.png) |
 
----
-
-## Mathematical Formulation
-
-### 1. Camera Calibration and Radial Undistortion
-Modern captures are calibrated with a $9 \times 6$ checkerboard target to obtain the intrinsic matrix $K$ and radial distortion coefficients $(k_1, k_2)$:
-$$K = \begin{bmatrix} f_x & 0 & c_x \\ 0 & f_y & c_y \\ 0 & 0 & 1 \end{bmatrix}, \quad \begin{cases} x_{\text{undist}} = x(1 + k_1 r^2 + k_2 r^4) \\ y_{\text{undist}} = y(1 + k_1 r^2 + k_2 r^4) \end{cases}$$
-Images are resized and center-aligned to standardized dimensions ($682 \times 384\,\text{px}$) with principal point $(c_x = 341, c_y = 192)$.
-
-### 2. Epipolar Geometry & Hartley Isotropic Normalization
-For two matching 2D points $\mathbf{x}_1, \mathbf{x}_2 \in \mathbb{P}^2$ across views, the epipolar constraint satisfies:
-$$\mathbf{x}_2^\top F \mathbf{x}_1 = 0, \quad \hat{\mathbf{x}}_2^\top E \hat{\mathbf{x}}_1 = 0$$
-where $E = [\mathbf{t}]_\times R = K_2^\top F K_1$. To avoid numerical degeneracy in the 8-point algorithm, Hartley's isotropic normalization transformation $T$ is applied:
-$$T = \begin{bmatrix} \frac{\sqrt{2}}{\bar{d}} & 0 & -\frac{\sqrt{2}\bar{x}}{\bar{d}} \\ 0 & \frac{\sqrt{2}}{\bar{d}} & -\frac{\sqrt{2}\bar{y}}{\bar{d}} \\ 0 & 0 & 1 \end{bmatrix}, \quad \tilde{\mathbf{x}} = T \mathbf{x}$$
-The Essential matrix is computed via Singular Value Decomposition ($A = U \Sigma V^\top$) enforcing rank-2 constraint $\Sigma = \text{diag}(1, 1, 0)$.
-
-### 3. Direct Linear Transform (DLT) Triangulation
-For each inlier correspondence, the 3D world coordinate $\mathbf{X}_i = [X, Y, Z, 1]^\top$ is estimated by solving the overdetermined homogeneous system:
-$$\begin{bmatrix} [\mathbf{x}_{1, i}]_\times P_1 \\ [\mathbf{x}_{2, i}]_\times P_2 \end{bmatrix} \mathbf{X}_i = \mathbf{0}$$
-where $P_1 = K_1 [I \mid \mathbf{0}]$ and $P_2 = K_2 [R \mid \mathbf{t}]$.
-
----
-
-## Experimental Results
-
-### Quantitative Metrics
-* **Total SuperGlue Candidates:** 104 matches
-* **Verified Geometric Inliers:** 71 matches (**68.3%**)
-* **Filtered Outliers:** 33 matches (**31.7%**) — eliminating foliage moving leaves, background traffic, and transient illumination artifacts.
-* **Reprojection Root Mean Square Error (RMSE):**
-  $$\text{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^N \|\mathbf{x}_{1, i} - \pi(P_1 \mathbf{X}_i)\|_2^2} = \mathbf{2.110\,\text{px}}$$
-* **Mean Reprojection Error:** $\mathbf{1.969\,\text{px}}$
-
-| Reprojection Error Distribution | Inliers vs Outliers Breakdown |
+| Vista Cenital de Cámaras | Histograma de Error de Reproyección |
 | :---: | :---: |
-| ![RMSE](docs/images/rmse_distribution_camera.png) | ![Inliers Breakdown](docs/images/inliers_outliers_superglue.png) |
+| ![Top View](docs/images/reconstruction_3d_topview.png) | ![RMSE](docs/images/rmse_distribution_camera.png) |
 
 ---
 
-## Repository Structure
+## 📁 Estructura del Repositorio
 
 ```text
 seminario_zaragoza_sfm/
-├── .gitignore
-├── README.md                                 <- Master project documentation
+├── README.md                                 <- Documentación general
+├── .gitignore                                <- Exclusiones de Git
 ├── docs/
-│   ├── Seminario_1.pptx                      <- Full 28-slide technical presentation
-│   ├── CVIS_Course_Assignment_2025_26.pdf    <- Academic specification
-│   ├── Pipeline.drawio                       <- Editable architecture diagram
-│   ├── 1_Inputs.drawio                       <- Input schema diagram
-│   └── images/                               <- Renders, plots, and slide figures
+│   ├── Seminario_1.pptx                      <- Presentación ejecutiva completa (28 slides)
+│   ├── CVIS_Course_Assignment_2025_26.pdf    <- Enunciado y requerimientos
+│   ├── Pipeline.drawio                       <- Diagrama de flujo de datos
+│   ├── 1_Inputs.drawio                       <- Diagrama de entradas
+│   └── images/                               <- Renders, nubes 3D y gráficas de error
 ├── src/
-│   ├── camera_calibration.py                 <- Intrinsic calibration & undistortion
-│   ├── global_assignment.py                  <- Master SfM pipeline (SVD, poses, DLT)
-│   ├── global_assignment_2.py                <- Extended multi-view pipeline
-│   ├── homographyRANSAC.py                   <- Robust planar homography
-│   ├── cutting_camera.py                     <- Aspect ratio and FOV matching
-│   ├── matches_in_between_points.py          <- SuperGlue match parser and filter
-│   ├── sfm_epipolar_pipeline.py              <- Standalone epipolar verification
-│   ├── utilities.py                          <- SE(3) matrix assemble & plotting
-│   └── utilities2.py                         <- Additional geometric utilities
+│   ├── camera_calibration.py                 <- Calibración con tablero y desdistorsión
+│   ├── global_assignment.py                  <- Pipeline principal SfM (SVD, DLT)
+│   ├── global_assignment_2.py                <- Pipeline SfM multivistal extendido
+│   ├── homographyRANSAC.py                   <- Homografía plana robusta
+│   ├── cutting_camera.py                     <- Ajuste dimensional y centrado de FOV
+│   ├── matches_in_between_points.py          <- Depuración de correspondencias SuperGlue
+│   ├── sfm_epipolar_pipeline.py              <- Verificación epipolar y normalización Hartley
+│   ├── utilities.py                          <- Ensamblado SE(3) y graficación 3D
+│   └── utilities2.py                         <- Utilidades adicionales
 ├── data/
-│   ├── calibration/
-│   │   ├── Calibration.txt                   <- Intrinsic calibration parameters
-│   │   └── k_matrix.txt                      <- Formatted K matrix
-│   ├── raw_images/                           <- Historic (1950) and modern captures
-│   ├── undistorted/                          <- Undistorted corrected frames
-│   └── matches/                              <- Extracted .npz match arrays
-└── results/
+│   ├── calibration/                          <- Matriz K y parámetros intrínsecos
+│   ├── raw_images/                           <- Fotografía histórica (1950) y fotos modernas
+│   ├── undistorted/                          <- Fotos corregidas por desdistorsión
+│   └── matches/                              <- Arrays .npz con emparejamientos
+└── results/                                  <- Salidas numéricas
 ```
 
 ---
 
-## Execution Guide
+## 🚀 Guía Rápida de Ejecución
 
-### 1. Requirements & Dependencies
-Ensure Python 3.9+ is installed:
+### 1. Dependencias
 ```bash
 pip install numpy opencv-python matplotlib scipy
 ```
 
-### 2. Camera Calibration
-Calibrate intrinsic parameters using the checkerboard dataset:
+### 2. Calibrar la Cámara
 ```bash
 python src/camera_calibration.py
 ```
 
-### 3. Run Structure from Motion
-Execute the multi-view reconstruction pipeline:
+### 3. Ejecutar la Reconstrucción 3D (SfM)
+Calcula las poses de las dos cámaras y triangula la nube de puntos 3D:
 ```bash
 python src/global_assignment.py
 ```
 
-### 4. Planar Homography & Epipolar Verification
+### 4. Estimar Homografías Planas
 ```bash
 python src/homographyRANSAC.py
-python src/sfm_epipolar_pipeline.py
 ```
 
 ---
 
-## Documentation
-
-* **Full Presentation:** [`docs/Seminario_1.pptx`](docs/Seminario_1.pptx) (Contains 28 detailed slides with all visual comparisons, error graphs, and camera trajectory).
-* **Course Assignment Guidelines:** [`docs/CVIS_Course_Assignment_2025_26.pdf`](docs/CVIS_Course_Assignment_2025_26.pdf).
+## 📄 Presentación Técnica Completa
+En la carpeta [`docs/Seminario_1.pptx`](docs/Seminario_1.pptx) se encuentra la presentación técnica de 28 diapositivas con el detalle de cada paso del algoritmo, las matrices numéricas obtenidas y la visualización de la nube de puntos.
